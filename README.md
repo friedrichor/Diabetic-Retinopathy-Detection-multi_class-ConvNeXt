@@ -1,2 +1,3 @@
 # Diabetic-Retinopathy-Detection-multi_class-ConvNeXt
-use ConvNeXt for multi classification
+use ConvNeXt for multi classification  
+task: Diabetic-Retinopathy-Detection
