@@ -11,12 +11,12 @@ ROOT = Path(os.path.relpath(ROOT, Path.cwd()))  # relative
 import torch
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-num_classes = 2
+num_classes = 4
 
 # 保存模型路径 & predict时调用的模型
-# model = ROOT / '../drive/MyDrive/weights_convnext' / 'best_model.pth'
+model = ROOT / '../drive/MyDrive/weights_convnext_multi' / 'model1.pth'
 # model = ROOT / 'weights' / 'best_model_l1k_epoch6_10fold.pth'
-model = ROOT / 'weights' / 'best_model_l1k_94.pth'
+# model = ROOT / 'weights' / 'best_model_l1k_94.pth'
 
 
 # 数据集&分类标签 路径
