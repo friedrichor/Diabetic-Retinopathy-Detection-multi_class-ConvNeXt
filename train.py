@@ -16,6 +16,7 @@ def main(args):
     print(args)
     device = args.device
     print(f"using {device} device.")
+    model_path = os.path.join(params.path_weights, args.model_name)  # 模型保存路径
 
     if os.path.exists(params.ROOT / 'weights') is False:
         os.makedirs(params.ROOT / 'weights')
@@ -111,7 +112,7 @@ def main(args):
         tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
         if best_acc < val_acc:
-            torch.save(model.state_dict(), params.model)
+            torch.save(model.state_dict(), model_path)
             best_acc = val_acc
 
 
@@ -122,6 +123,9 @@ if __name__ == '__main__':
     parser.add_argument('--batch-size', type=int, default=8)
     parser.add_argument('--lr', type=float, default=5e-4)
     parser.add_argument('--wd', type=float, default=5e-2)
+
+    # 模型保存名称
+    parser.add_argument('--model-name', type=str, default='model_tmp.pth')
 
     # 数据集所在根目录
     parser.add_argument('--data-path', type=str, default=params.path_train)
