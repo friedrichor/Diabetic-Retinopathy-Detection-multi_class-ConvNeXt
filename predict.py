@@ -7,6 +7,9 @@ from PIL import Image
 from torchvision import transforms
 import matplotlib.pyplot as plt
 
+from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
+
+
 from model import convnext_large as create_model  # 更改预训练模型时更改import内容
 import params
 
@@ -34,7 +37,7 @@ def main(args):
     # create model
     model = create_model(num_classes=num_classes).to(device)
     # load model weights
-    model_weight_path = args.weights
+    model_weight_path = os.path.join(params.path_weights, args.model_name)
     model.load_state_dict(torch.load(model_weight_path, map_location=device))
     model.eval()
 
@@ -42,9 +45,12 @@ def main(args):
     TP, FN, FP, TN = 0, 0, 0, 0
     num_acc = 0
     num_all = 0
+    label_true = []
+    label_predict = []
     for cls in os.listdir(test_path):
         num_all += len(os.listdir(os.path.join(test_path, cls)))
         for img_path in os.listdir(os.path.join(test_path, cls)):
+            label_true.append(int(cls))
             img_path = os.path.join(test_path, cls, img_path)
             assert os.path.exists(img_path), "file: '{}' dose not exist.".format(img_path)
             img = Image.open(img_path)
@@ -58,34 +64,38 @@ def main(args):
                 # predict class
                 output = torch.squeeze(model(img.to(device))).cpu()
                 predict = torch.softmax(output, dim=0)
-                predict_cla = torch.argmax(predict).numpy()
+                predict_cls = torch.argmax(predict).numpy()
+                label_predict.append(int(predict_cls))
 
-                print_res = "class: {}   prob: {:.3}".format(class_indict[str(predict_cla)],
-                                                             predict[predict_cla].numpy())
+                print_res = "class: {}   prob: {:.3}".format(class_indict[str(predict_cls)],
+                                                             predict[predict_cls].numpy())
                 # print(print_res)
                 # for i in range(len(predict)):
                 #     print("class: {:10}   prob: {:.3}".format(class_indict[str(i)], predict[i].numpy()))
 
-                if str(predict_cla) == cls:
+                if str(predict_cls) == cls:
                     num_acc += 1
 
     print('num of test datasets =', num_all)
     print('acc =', num_acc / num_all)
-    # accuracy = (TP + TN) / (TP + FN + FP + TN)
-    # precision = TP / (TP + FP)
-    # recall = TP / (TP + FN)
-    # F1 = 2 * precision * recall / (precision+recall)
-    # print('TP =', TP, 'FN =', FN, 'FP =', FP, 'TN =', TN)
-    # print('准确率:', accuracy)
-    # print('精确率:', precision)
-    # print('召回率:', recall)
-    # print('F1 score:', F1)
+    category_show(label_true, label_predict)
 
+
+# 展示各类的准确率、召回率、f1-score，及混淆矩阵可视化
+def category_show(y_true, y_predict):
+    target_names = ['0', '1', '2', '3']
+    print(classification_report(y_true, y_predict, target_names=target_names))
+    cm = confusion_matrix(y_true, y_predict)
+    cm_display = ConfusionMatrixDisplay(cm).plot()
 
 def parse_opt():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', nargs='+', type=str, default=params.model, help='model path(s)')  # 模型参数
-    parser.add_argument('--path_test', type=str, default=params.path_test, help='test datasets path')  # 测试集路径
+    # 模型参数
+    # parser.add_argument('--weights', nargs='+', type=str, default=params.model, help='model path(s)')
+    # 调用的模型名称
+    parser.add_argument('--model-name', type=str, default='model_tmp.pth')
+    # 测试集路径
+    parser.add_argument('--path_test', type=str, default=params.path_test, help='test datasets path')
     parser.add_argument('--path_json', type=str, default=params.path_json, help='class_indice.json path')
     parser.add_argument('--num_classes', type=int, default=params.num_classes, help='number of classes')
     parser.add_argument('--device', default=params.device, help='device id (i.e. 0 or 0,1 or cpu)')
