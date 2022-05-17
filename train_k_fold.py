@@ -127,6 +127,9 @@ if __name__ == '__main__':
     parser.add_argument('--wd', type=float, default=5e-2)
     parser.add_argument('--k-fold', type=int, default=5)
 
+    # 模型保存名称
+    parser.add_argument('--model-name', type=str, default='model_tmp.pth')
+
     # 数据集所在根目录
     parser.add_argument('--data-path', type=str, default=params.path_train)
 
