@@ -3,7 +3,7 @@ use ConvNeXt for multi classification
 task: Diabetic-Retinopathy-Detection
 
 数据划分：
-1. 按类别9:1划分训练集（这里不分训练集和验证集，都归为验证集）和测试集 
+1. 按类别9:1划分训练集（这里不分训练集和验证集，都归为训练集）和测试集 
 2. 训练时8:2划分训练集和验证集
 
 数据扩展（训练集）：  
