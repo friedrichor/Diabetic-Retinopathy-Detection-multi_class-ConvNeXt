@@ -17,7 +17,7 @@ num_classes = 4
 path_weights = ROOT / '../drive/MyDrive/weights_convnext_multi'
 
 # 保存模型路径 & predict时调用的模型
-# model = ROOT / '../drive/MyDrive/weights_convnext' / 'best_model.pth'
+# model = path_weights / 'best_model.pth'
 # model = ROOT / 'weights' / 'best_model_l1k_epoch6_10fold.pth'
 # model = ROOT / 'weights' / 'best_model_l1k_94.pth'
 
