@@ -25,6 +25,7 @@ def main(args):
     # 设置交叉验证折数
     K_FOLD = args.k_fold
     for ki in range(K_FOLD):
+        print(f'第{ki}折: ')
         train_images_path, train_images_label, val_images_path, val_images_label = k_fold_read_split_data(args.data_path, ki, K_FOLD)
 
         img_size = 224
