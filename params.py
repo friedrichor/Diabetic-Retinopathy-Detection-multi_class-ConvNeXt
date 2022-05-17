@@ -13,8 +13,11 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 num_classes = 4
 
+# 模型保存文件夹
+path_weights = ROOT / '../drive/MyDrive/weights_convnext_multi'
+
 # 保存模型路径 & predict时调用的模型
-model = ROOT / '../drive/MyDrive/weights_convnext_multi' / 'model1.pth'
+# model = ROOT / '../drive/MyDrive/weights_convnext' / 'best_model.pth'
 # model = ROOT / 'weights' / 'best_model_l1k_epoch6_10fold.pth'
 # model = ROOT / 'weights' / 'best_model_l1k_94.pth'
 
