@@ -16,6 +16,7 @@ def main(args):
     print(args)
     device = args.device
     print(f"using {device} device.")
+    model_path = os.path.join(params.path_weights, args.model_name)  # 模型保存路径
 
     if os.path.exists(params.ROOT / 'weights') is False:
         os.makedirs(params.ROOT / 'weights')
@@ -115,7 +116,7 @@ def main(args):
             tb_writer.add_scalar(tags[4], optimizer.param_groups[0]["lr"], epoch)
 
             if best_acc < val_acc:
-                torch.save(model.state_dict(), params.model)
+                torch.save(model.state_dict(), model_path)
                 best_acc = val_acc
 
 
