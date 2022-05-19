@@ -12,6 +12,7 @@ import torch
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 num_classes = 4
+img_size = 384
 
 # 模型保存文件夹
 path_weights = ROOT / '../drive/MyDrive/weights_convnext_multi'
