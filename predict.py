@@ -42,7 +42,6 @@ def main(args):
     model.eval()
 
     test_path = args.path_test
-    TP, FN, FP, TN = 0, 0, 0, 0
     num_acc = 0
     num_all = 0
     label_true = []
