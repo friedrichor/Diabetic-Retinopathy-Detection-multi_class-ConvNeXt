@@ -12,7 +12,7 @@ import torch
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 num_classes = 4
-img_size = 384
+img_size = 224
 
 # 模型保存文件夹
 path_weights = ROOT / '../drive/MyDrive/weights_convnext_multi'
@@ -24,7 +24,9 @@ path_weights = ROOT / '../drive/MyDrive/weights_convnext_multi'
 
 
 # 数据集&分类标签 路径
-path_train = ROOT / 'data/train/'
-path_test = ROOT / 'data/test'
+# path_train = ROOT / 'data/train/'
+# path_test = ROOT / 'data/test'
+path_train = ROOT / 'data_add_extra/train/'
+path_test = ROOT / 'data_add_extra/test'
 path_test_submit = '../../test'
 path_json = ROOT / 'class_indices.json'
