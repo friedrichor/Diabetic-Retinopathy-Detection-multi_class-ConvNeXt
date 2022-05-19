@@ -33,13 +33,11 @@ def read_split_data(root: str, val_rate: float = 0.2):
     val_images_path = []  # 存储验证集的所有图片路径
     val_images_label = []  # 存储验证集图片对应索引信息
     every_class_num = []  # 存储每个类别的样本总数
-    supported = [".jpg", ".JPG", ".png", ".PNG"]  # 支持的文件后缀类型
     # 遍历每个文件夹下的文件
     for cla in classes:
         cla_path = os.path.join(root, cla)
         # 遍历获取supported支持的所有文件路径
-        images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)
-                  if os.path.splitext(i)[-1] in supported]
+        images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)]
         # 获取该类别对应的索引
         image_class = class_indices[cla]
         # 记录该类别的样本数量
@@ -84,13 +82,11 @@ def k_fold_read_split_data(root: str, k_i: int, k_fold: int = 3):
     val_images_path = []  # 存储验证集的所有图片路径
     val_images_label = []  # 存储验证集图片对应索引信息
     every_class_num = []  # 存储每个类别的样本总数
-    supported = [".jpg", ".JPG", ".png", ".PNG"]  # 支持的文件后缀类型
     # 遍历每个文件夹下的文件
     for cla in classes:
         cla_path = os.path.join(root, cla)
         # 遍历获取supported支持的所有文件路径
-        images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)
-                  if os.path.splitext(i)[-1] in supported]
+        images = [os.path.join(root, cla, i) for i in os.listdir(cla_path)]
         # 获取该类别对应的索引
         image_class = class_indices[cla]
         # 记录该类别的样本数量
